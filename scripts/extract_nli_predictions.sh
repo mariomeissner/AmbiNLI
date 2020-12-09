@@ -1,0 +1,1 @@
+python scripts/extract_nli_predictions.py --model_path checkpoints/20201118_03_runglue_mnli/checkpoint-1500 --snli_uids_list_path data/snli_uids.json --mnli_uids_list_path data/mnli_uids.json
