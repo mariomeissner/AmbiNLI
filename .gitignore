@@ -1,12 +1,19 @@
-# Byte-compiled / optimized / DLL files
+# Python stuff
 __pycache__/
 *.py[cod]
 *$py.class
 
+# VSCode settings
+.vscode
+
+# Results folders (maybe include?)
+predictions
+results
+
+# Private project folders
+scripts_hf
 ChaosNLI
 data
 checkpoints
-predictions
-results
 runs
 nohup.out
