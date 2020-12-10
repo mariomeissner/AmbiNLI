@@ -1,18 +1,20 @@
-# AmbiNLI: TODO
+# AmbiNLI Roadmap
 
-- [ ] Hyperparameter performance comparison
+- [x] Hyperparameter performance comparison
   - [x] “Fast”: 128 batch, 3e-5 lr, fp16
-  - [ ] “Slow”: 32 batch, 1e-5 lr, fp32
+  - [x] “Slow”: 32 batch, 1e-5 lr, fp32
+
+- [x] AmbiNLI subsets performance comparison
+  - [x] Only AmbiS
+  - [x] Only AmbiM
+  - [x] Only AmbiU
+  - [x] Only AmbiSM
+  - [x] AmbiFull
   
 - [ ] Fixing uNLI
   - [ ] Check how they normalize the data in the paper
   - [ ] Find better conversion method
-  - [ ] Don't include test / dev splits in AmbiNLI
-  
-- [ ] AmbiNLI subsets performance comparison
-  - [ ] Only AmbiS
-  - [ ] Only AmbiM
-  - [ ] Only AmbiU
+  - [ ] Don't include test / dev splits in AmbiNLI 
  
 - [ ] Investigate about divergence calculation methods
   - [ ] Is cross-entropy really the best loss in this case?
