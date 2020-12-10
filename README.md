@@ -34,3 +34,5 @@
   - [ ] Amount of questions that flip answer every epoch when compared to gold-label training (like they do in Cartography)
 
 - [ ] Can our models detect ambiguity in other datasets? Compare with Cartography?
+
+- [ ] Evaluation set following the umbrella example.
