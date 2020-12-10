@@ -30,6 +30,10 @@
 
 - [ ] Compare performance between high and low entropy regions of ChaosNLI
 
+- [ ] Check robustness? Hypothesis-only baselines?
+
+- [ ] Qualitative error analysis
+
 - [ ] Study question stability during training
   - [ ] Amount of questions that flip answer every epoch when compared to gold-label training (like they do in Cartography)
 
