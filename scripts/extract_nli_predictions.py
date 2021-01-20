@@ -2,10 +2,8 @@ import fire
 import json
 import numpy as np
 from tqdm import tqdm
-from torch import tensor
 from scipy.special import softmax
-from torch.nn.utils.rnn import pad_sequence
-from datasets import load_from_disk, load_dataset
+from datasets import load_dataset
 from transformers import BertForSequenceClassification, BertTokenizer
 
 BATCH_SIZE = 128
@@ -17,6 +15,7 @@ def extract_predictions(
     model_path: str,
     task_name: str,
     uids_list_path: str,
+    temperature: int = 1.0,
 ):
     if task_name == "snli":
         dataset = load_dataset("snli")["validation"]
@@ -56,7 +55,7 @@ def extract_predictions(
         output = model(**batch_inputs, return_dict=True)
         logits = output.logits.cpu().detach().numpy()
         predicted_label_ids = np.argmax(logits, axis=1)
-        predicted_probs = softmax(logits, axis=1)
+        predicted_probs = softmax(logits / temperature, axis=1)
 
         for j in range(logits.shape[0]):
             uid = uid_list[str(i + j)]

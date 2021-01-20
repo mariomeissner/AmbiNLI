@@ -47,7 +47,8 @@ class CustomBertForSequenceClassification(BertForSequenceClassification):
         loss = None
         if labels is not None:
             loss = soft_crossentropy(
-                logits.view(-1, self.num_labels), labels.view(-1, self.num_labels)
+                logits.view(-1, self.num_labels) / self.temperature,
+                labels.view(-1, self.num_labels),
             )
 
         if not return_dict:

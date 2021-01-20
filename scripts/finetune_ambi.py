@@ -19,9 +19,10 @@ parser.add_argument("output_dir")
 parser.add_argument("--use_snli", action="store_true")
 parser.add_argument("--use_mnli", action="store_true")
 parser.add_argument("--use_unli", action="store_true")
-parser.add_argument("--lr", default=1e-5, type=float)
-parser.add_argument("--epochs", default=5, type=int)
-parser.add_argument("--batch_size", default=32, type=int)
+parser.add_argument("--lr", default=3e-5, type=float)
+parser.add_argument("--epochs", default=1, type=int)
+parser.add_argument("--batch_size", default=128, type=int)
+parser.add_argument("--temperature", default=1, type=float)
 parser.add_argument("--fp16", action="store_true")
 args = parser.parse_args()
 
@@ -32,7 +33,7 @@ if args.use_snli:
 if args.use_mnli:
     dataset_list.append(load_from_disk(ambi_mnli_path))
 if args.use_unli:
-    dataset_list.append(load_from_disk(ambi_unli_path))
+    dataset_list.append(load_from_disk(ambi_unli_path)["train"])
 if not dataset_list:
     exit("Provide at least one dataset.")
 
@@ -52,6 +53,7 @@ dataset = concatenate_datasets(dataset_list)
 tokenizer = BertTokenizer.from_pretrained(args.model_path)
 model = CustomBertForSequenceClassification.from_pretrained(args.model_path)
 
+model.temperature = args.temperature
 
 def compute_metrics(p: EvalPrediction):
     preds = p.predictions[0] if isinstance(p.predictions, tuple) else p.predictions
