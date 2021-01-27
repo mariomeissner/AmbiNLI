@@ -19,6 +19,7 @@ parser.add_argument("output_dir")
 parser.add_argument("--use_snli", action="store_true")
 parser.add_argument("--use_mnli", action="store_true")
 parser.add_argument("--use_unli", action="store_true")
+parser.add_argument("--use_filtered_unli", action="store_true")
 parser.add_argument("--lr", default=1e-5, type=float)
 parser.add_argument("--epochs", default=5, type=int)
 parser.add_argument("--batch_size", default=32, type=int)
@@ -32,7 +33,13 @@ if args.use_snli:
 if args.use_mnli:
     dataset_list.append(load_from_disk(ambi_mnli_path))
 if args.use_unli:
-    dataset_list.append(load_from_disk(ambi_unli_path))
+    if args.use_filtered_unli:
+        unli_dataset = load_from_disk(ambi_unli_path)
+        unli_dataset = unli_dataset.filter(
+            lambda ex: (ex['unli'] > 0.05) and (ex['unli'] < 0.97))
+    else:
+        dataset_list.append(load_from_disk(ambi_unli_path))
+
 if not dataset_list:
     exit("Provide at least one dataset.")
 
