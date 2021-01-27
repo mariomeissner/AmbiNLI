@@ -46,8 +46,10 @@ class CustomBertForSequenceClassification(BertForSequenceClassification):
         # Here we do our custom loss against an ambiguous target
         loss = None
         if labels is not None:
+            # if hasattr(self, "temperature"):
+            #     logits = logits / self.temperature
             loss = soft_crossentropy(
-                logits.view(-1, self.num_labels) / self.temperature,
+                logits.view(-1, self.num_labels),
                 labels.view(-1, self.num_labels),
             )
 

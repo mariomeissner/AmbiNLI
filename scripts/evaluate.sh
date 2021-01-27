@@ -39,7 +39,7 @@ else
 fi
 
 mkdir -p predictions/$1 results/$1
-python scripts/extract_nli_predictions.py checkpoints/$1/ snli data/snli_uids.json --temperature 1.0 > predictions/$1/snli.json
-python scripts/extract_nli_predictions.py checkpoints/$1/ mnli data/mnli_uids.json --temperature 1.0 > predictions/$1/mnli.json
+python scripts/extract_nli_predictions.py checkpoints/$1/ snli data/snli_uids.json > predictions/$1/snli.json
+python scripts/extract_nli_predictions.py checkpoints/$1/ mnli data/mnli_uids.json > predictions/$1/mnli.json
 python ChaosNLI/src/scripts/evaluate.py --task_name uncertainty_nli --data_file ChaosNLI/data/chaosNLI_v1.0/chaosNLI_snli.jsonl --prediction_file predictions/$1/snli.json > results/$1/snli.txt
 python ChaosNLI/src/scripts/evaluate.py --task_name uncertainty_nli --data_file ChaosNLI/data/chaosNLI_v1.0/chaosNLI_mnli_m.jsonl --prediction_file predictions/$1/mnli.json > results/$1/mnli.txt
