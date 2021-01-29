@@ -1,5 +1,5 @@
 import torch
-from transformers import BertForSequenceClassification
+from transformers import RobertaForSequenceClassification
 from transformers.modeling_outputs import SequenceClassifierOutput
 
 
@@ -8,7 +8,9 @@ def soft_crossentropy(input, target):
     return -(target * logprobs).sum() / input.shape[0]
 
 
-class CustomBertForSequenceClassification(BertForSequenceClassification):
+class CustomRobertaForSequenceClassification(RobertaForSequenceClassification):
+    _keys_to_ignore_on_load_missing = [r"position_ids"]
+
     def forward(
         self,
         input_ids=None,
@@ -22,11 +24,17 @@ class CustomBertForSequenceClassification(BertForSequenceClassification):
         output_hidden_states=None,
         return_dict=None,
     ):
+        r"""
+        labels (:obj:`torch.LongTensor` of shape :obj:`(batch_size,)`, `optional`):
+            Labels for computing the sequence classification/regression loss. Indices should be in :obj:`[0, ...,
+            config.num_labels - 1]`. If :obj:`config.num_labels == 1` a regression loss is computed (Mean-Square loss),
+            If :obj:`config.num_labels > 1` a classification loss is computed (Cross-Entropy).
+        """
         return_dict = (
             return_dict if return_dict is not None else self.config.use_return_dict
         )
 
-        outputs = self.bert(
+        outputs = self.roberta(
             input_ids,
             attention_mask=attention_mask,
             token_type_ids=token_type_ids,
@@ -37,17 +45,11 @@ class CustomBertForSequenceClassification(BertForSequenceClassification):
             output_hidden_states=output_hidden_states,
             return_dict=return_dict,
         )
+        sequence_output = outputs[0]
+        logits = self.classifier(sequence_output)
 
-        pooled_output = outputs[1]
-
-        pooled_output = self.dropout(pooled_output)
-        logits = self.classifier(pooled_output)
-
-        # Here we do our custom loss against an ambiguous target
         loss = None
         if labels is not None:
-            # if hasattr(self, "temperature"):
-            #     logits = logits / self.temperature
             loss = soft_crossentropy(
                 logits.view(-1, self.num_labels),
                 labels.view(-1, self.num_labels),

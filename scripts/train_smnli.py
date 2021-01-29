@@ -3,6 +3,7 @@ import numpy as np
 from transformers import (
     AutoTokenizer,
     AutoModelForSequenceClassification,
+    RobertaForSequenceClassification,
     Trainer,
     TrainingArguments,
     EvalPrediction,
@@ -49,6 +50,11 @@ model = AutoModelForSequenceClassification.from_pretrained(
     args.source_model_name, return_dict=True, num_labels=3
 )
 tokenizer = AutoTokenizer.from_pretrained(args.source_model_name)
+
+# Remove token-type-ids if roberta
+if type(model) == RobertaForSequenceClassification:
+    print("Removing token_type_ids because Roberta-chan doesn't like it.")
+    train_dataset.remove_columns_("token_type_ids")
 
 training_args = TrainingArguments(
     output_dir=args.output_dir,
