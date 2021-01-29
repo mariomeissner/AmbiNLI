@@ -4,15 +4,16 @@ import numpy as np
 from tqdm import tqdm
 from scipy.special import softmax
 from datasets import load_dataset
-from transformers import BertForSequenceClassification, BertTokenizer
+from transformers import BertForSequenceClassification, DistilBertForSequenceClassification, BertTokenizer, DistilBertTokenizer
 
-BATCH_SIZE = 128
+BATCH_SIZE = 64
 MAX_LEN = 128
 LABEL_DICT = {0: "entailment", 1: "neutral", 2: "contradiction"}
 
 
 def extract_predictions(
     model_path: str,
+    model_type: str,
     task_name: str,
     uids_list_path: str,
     temperature: int = 1.0,
@@ -29,8 +30,13 @@ def extract_predictions(
     else:
         exit("Invalid task_name.")
 
-    model = BertForSequenceClassification.from_pretrained(model_path)
-    tokenizer = BertTokenizer.from_pretrained(model_path)
+    if model_type == "bert":
+
+        model = BertForSequenceClassification.from_pretrained(model_path)
+        tokenizer = BertTokenizer.from_pretrained(model_path)
+    elif model_type == "distilbert":
+        model = DistilBertForSequenceClassification.from_pretrained(model_path)
+        tokenizer = DistilBertTokenizer.from_pretrained(model_path)
     model.eval()
     model.to("cuda")
     # snli_dataset = load_from_disk(snli_dataset_path)["validation"]
