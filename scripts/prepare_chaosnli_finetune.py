@@ -1,4 +1,3 @@
-import json
 import datasets
 from transformers import BertTokenizer
 

@@ -6,7 +6,7 @@ from transformers import BertTokenizer
 max_length = 128
 num_procs = 16
 tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
-unli_path = 'unli/out/uSnliCsv/Baseline.baseline/out/'
+unli_path = 'data/unli/'
 
 
 def preprocess_function(example: dict):

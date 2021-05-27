@@ -16,10 +16,10 @@ parser.add_argument("output_dir")
 parser.add_argument("--lr", default=3e-5, type=float)
 parser.add_argument("--epochs", default=3, type=int)
 parser.add_argument("--batch_size", default=128, type=int)
-parser.add_argument("--fp16", action="store_true")
+parser.add_argument("--fp32", default=False, action="store_true")
+parser.add_argument("--seed", default=42, type=int)
 args = parser.parse_args()
 
-# Load dataset. TODO: Do this in prepare_smnli.py instead
 dataset_list = [
     load_from_disk("data/mnli-tokenized"),
     load_from_disk("data/snli-tokenized"),
@@ -62,9 +62,10 @@ training_args = TrainingArguments(
     do_train=True,
     per_device_train_batch_size=args.batch_size,
     learning_rate=args.lr,
-    fp16=args.fp16,
+    fp16=not args.fp32,
     num_train_epochs=args.epochs,
     save_steps=0,
+    seed=args.seed,
 )
 
 trainer = Trainer(

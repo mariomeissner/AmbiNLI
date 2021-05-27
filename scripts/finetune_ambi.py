@@ -27,8 +27,8 @@ parser.add_argument("--epochs", default=5, type=int)
 parser.add_argument("--batch_size", default=128, type=int)
 parser.add_argument("--use_gold_labels", action="store_true")
 # parser.add_argument("--temperature", default=1, type=float)
-parser.add_argument("--fp16", action="store_true")
-parser.add_argument("--no_shuffle", action="store_true")
+parser.add_argument("--fp32", default=False, action="store_true")
+parser.add_argument("--seed", default=42, type=int)
 args = parser.parse_args()
 
 ambi_snli_path = "data/ambi-snli-tokenized"
@@ -65,8 +65,8 @@ dataset_list = [
 
 
 dataset = concatenate_datasets(dataset_list)
-if not args.no_shuffle:
-    dataset = dataset.shuffle()
+# if not args.no_shuffle:
+#     dataset = dataset.shuffle()
 
 if args.use_gold_labels:
     print("Using gold-labels")
@@ -100,7 +100,8 @@ training_args = TrainingArguments(
     learning_rate=args.lr,
     num_train_epochs=args.epochs,
     per_device_train_batch_size=args.batch_size,
-    fp16=args.fp16,
+    fp16=not args.fp32,
+    seed=args.seed,
 )
 
 trainer = Trainer(
