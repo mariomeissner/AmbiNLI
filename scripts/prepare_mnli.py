@@ -19,4 +19,4 @@ def preprocess_function(examples: dict):
 dataset = dataset.map(preprocess_function, batched=True, num_proc=num_procs)
 dataset = dataset.filter(lambda sample: sample["label"] != -1)
 dataset.shuffle()
-dataset.save_to_disk("mnli-tokenized")
+dataset.save_to_disk("data/mnli-tokenized")

@@ -18,4 +18,4 @@ def preprocess_function(examples: dict):
 
 dataset = dataset.map(preprocess_function, batched=True, num_proc=num_procs)
 dataset = dataset.filter(lambda sample: sample["label"] != -1)
-dataset.save_to_disk("snli-tokenized")
+dataset.save_to_disk("data/snli-tokenized")
