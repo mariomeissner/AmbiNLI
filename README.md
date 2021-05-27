@@ -3,6 +3,27 @@
 ## Paper and Citation
 ...
 
+## Initial setup
+Install necessary libraries:
+``` bash
+pip install -f requirements.txt
+```
+
+Clone ChaosNLI:
+```
+git clone https://github.com/easonnie/ChaosNLI.git ChaosNLI
+```
+
+Set up the datasets:
+```
+python scripts/prepare_snli.py
+python scripts/prepare_mnli.py
+python scripts/prepare_ambi_snli.py
+python scripts/prepare_ambi_mnli.py
+python scripts/prepare_ambi_unli.py
+python scripts/prepare_chaosnli_finetune.py
+```
+
 ## Reproducing the paper results
 
 Pretrain a BERT model on 3 epochs of S+MNLI:
