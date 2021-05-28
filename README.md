@@ -16,17 +16,14 @@ source ChaosNLI/setup.sh
 bash ChaosNLI/scripts/download_data.sh
 ```
 
-Set up the datasets:
-```
-python scripts/prepare_snli.py
-python scripts/prepare_mnli.py
-python scripts/prepare_ambi_snli.py
-python scripts/prepare_ambi_mnli.py
-python scripts/prepare_ambi_unli.py
-python scripts/prepare_chaosnli_finetune.py
+Set up the datasets (run once for each type of dataset you want to set up):
+``` bash
+python scripts/prepare_{*}.py
 ```
 
-## Reproducing the paper results
+## Reproducing the main paper results
+
+You can get results similar (sadly not equal due to small differences in seeds) to the paper by following these steps.
 
 Pretrain a BERT model on 3 epochs of S+MNLI:
 ``` bash
@@ -37,6 +34,8 @@ Finetune on some subset of AmbiNLI. The following example trains on SNLI + MNLI 
 ``` bash
 python scripts/finetune_ambi.py checkpoints/base-models/bert-base-smnli/ checkpoints/ambinli-results/ambi-smnli --use_snli --use_mnli
 ```
+
+Two or three epochs (`--epochs`) work best.
 
 Run `python scripts/finetune_ambi.py --help` to see the remaining argument switches to run all the different experiments. Most importantly, run with `--use_gold_labels` to use gold-labels instead of the ambiguity distribution on whatever dataset(s) you selected.
 
