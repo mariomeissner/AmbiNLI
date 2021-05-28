@@ -9,9 +9,11 @@ Install necessary libraries:
 pip install -f requirements.txt
 ```
 
-Clone ChaosNLI:
+Clone ChaosNLI and set it up:
 ```
 git clone https://github.com/easonnie/ChaosNLI.git ChaosNLI
+source ChaosNLI/setup.sh
+bash ChaosNLI/scripts/download_data.sh
 ```
 
 Set up the datasets:
