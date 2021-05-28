@@ -1,7 +1,8 @@
 # Embracing Ambiguity: Shifting the Training Target of NLI Models
 
 ## Paper and Citation
-...
+
+TODO: Add Arxiv / ACL link and bibtex here once available.
 
 ## Initial setup
 Install necessary libraries:
