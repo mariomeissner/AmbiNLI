@@ -2,7 +2,24 @@
 
 ## Paper and Citation
 
-TODO: Add Arxiv / ACL link and bibtex here once available.
+This is the code for the paper ["Embracing Ambiguity: Shifting the Training Target of NLI Models"](https://arxiv.org/abs/2106.03020). Please cite as the following:
+```
+@inproceedings{meissner-etal-2021-embracing,
+    title = "Embracing Ambiguity: {S}hifting the Training Target of {NLI} Models",
+    author = "Meissner, Johannes Mario  and
+      Thumwanit, Napat  and
+      Sugawara, Saku  and
+      Aizawa, Akiko",
+    booktitle = "Proceedings of the 59th Annual Meeting of the Association for Computational Linguistics and the 11th International Joint Conference on Natural Language Processing (Volume 2: Short Papers)",
+    month = aug,
+    year = "2021",
+    address = "Online",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2021.acl-short.109",
+    doi = "10.18653/v1/2021.acl-short.109",
+    pages = "862--869",
+}
+```
 
 ## Initial setup
 Install necessary libraries:
